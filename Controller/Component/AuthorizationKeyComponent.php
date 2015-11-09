@@ -84,7 +84,7 @@ class AuthorizationKeyComponent extends Component {
  *
  * @var array
  */
-    public $AuthorizationKeyAction = array(
+    public $AuthorizeKeyAction = array(
         'plugin' => 'authorization_keys',
         'controller' => 'authorization_keys',
         'action' => 'view',
@@ -186,16 +186,16 @@ class AuthorizationKeyComponent extends Component {
             ) + $this->controller->request->query;
 
         // リダイレクトURL準備
-        $this->AuthorizationKeyAction[] = $this->_hashKey;
-        $this->AuthorizationKeyAction['frame_id'] = Current::read('Frame.id');
+        $this->AuthorizeKeyAction[] = $this->_hashKey;
+        $this->AuthorizeKeyAction['frame_id'] = Current::read('Frame.id');
         // リファラが自分自身でないことが必須（無限ループになる
         if ($this->operationType == AuthorizationKeyComponent::OPERATION_REDIRECT
-            && $controller->referer('', true) != NetCommonsUrl::actionUrl($this->AuthorizationKeyAction)
+            && $controller->referer('', true) != NetCommonsUrl::actionUrl($this->AuthorizeKeyAction)
             && $controller->action == $this->targetAction) {
             // 切り替え後、認証成功時のURLを取り出す
             $returnUrl = $controller->here;
             $controller->Session->write('AuthorizationKey.returnUrl.' . $this->_hashKey, $returnUrl . '?' . http_build_query($this->controller->request->query));
-            $controller->redirect(NetCommonsUrl::actionUrl($this->AuthorizationKeyAction));
+            $controller->redirect(NetCommonsUrl::actionUrl($this->AuthorizeKeyAction));
         }
         return;
     }
