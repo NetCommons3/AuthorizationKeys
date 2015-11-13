@@ -20,33 +20,33 @@ class AuthorizationKeyBehavior extends ModelBehavior {
 /**
  * @var array 設定
  */
-    public $settings;
+	public $settings;
 
 /**
  * @var null 削除予定の元モデルのデータ
  */
-    protected $_deleteTargetData = null;
+	protected $_deleteTargetData = null;
 
 /**
  * 認証キーモデルを返す
  *
  * @return AuthorizationKey
  */
-    protected function _getModel() {
-        $model = ClassRegistry::init('AuthorizationKeys.AuthorizationKey');
-        return $model;
-    }
+	protected function _getModel() {
+		$model = ClassRegistry::init('AuthorizationKeys.AuthorizationKey');
+		return $model;
+	}
 
-    /**
-     * setup
-     *
-     * @param Model $Model モデル
-     * @param array $settings 設定値
-     * @return void
-     */
-    public function setup(Model $Model, $settings = array()) {
-        $this->settings[$Model->alias] = $settings;
-    }
+	/**
+	 * setup
+	 *
+	 * @param Model $Model モデル
+	 * @param array $settings 設定値
+	 * @return void
+	 */
+	public function setup(Model $Model, $settings = array()) {
+		$this->settings[$Model->alias] = $settings;
+	}
 
 /**
  * タグ保存処理
@@ -57,17 +57,17 @@ class AuthorizationKeyBehavior extends ModelBehavior {
  * @throws InternalErrorException
  * @return void
  */
-    public function afterSave(Model $Model, $created, $options = array()) {
-        //$contentId = $Model->data[$Model->alias]['id'];
-        //$contentId = $Model->getLastInsertID();
-        $contentId = $Model->id;
-        if (isset($Model->data['AuthorizationKey'])) {
-            $AuthorizationKey = $this->_getModel();
-            if (! $AuthorizationKey->saveAuthorizationKey($Model->alias, $contentId, $Model->data['AuthorizationKey']['authorization_key'])) {
-                throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
-            }
-        }
-    }
+	public function afterSave(Model $Model, $created, $options = array()) {
+		//$contentId = $Model->data[$Model->alias]['id'];
+		//$contentId = $Model->getLastInsertID();
+		$contentId = $Model->id;
+		if (isset($Model->data['AuthorizationKey'])) {
+			$AuthorizationKey = $this->_getModel();
+			if (! $AuthorizationKey->saveAuthorizationKey($Model->alias, $contentId, $Model->data['AuthorizationKey']['authorization_key'])) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+		}
+	}
 
 /**
  * 認証キー情報をFind結果にまぜる
@@ -78,19 +78,19 @@ class AuthorizationKeyBehavior extends ModelBehavior {
  * @return array $results
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-    public function afterFind(Model $Model, $results, $primary = false) {
-        foreach ($results as $key => $target) {
-            if (isset($target[$Model->alias]['id'])) {
-                $AuthorizationKey = $this->_getModel();
-                $authKey = $AuthorizationKey->getAuthorizationKeyByContentId($Model->alias, $target[$Model->alias]['id']);
-                if ($authKey) {
-                    $target['AuthorizationKey'] = $authKey['AuthorizationKey'];
-                }
-                $results[$key] = $target;
-            }
-        }
-        return $results;
-    }
+	public function afterFind(Model $Model, $results, $primary = false) {
+		foreach ($results as $key => $target) {
+			if (isset($target[$Model->alias]['id'])) {
+				$AuthorizationKey = $this->_getModel();
+				$authKey = $AuthorizationKey->getAuthorizationKeyByContentId($Model->alias, $target[$Model->alias]['id']);
+				if ($authKey) {
+					$target['AuthorizationKey'] = $authKey['AuthorizationKey'];
+				}
+				$results[$key] = $target;
+			}
+		}
+		return $results;
+	}
 
 /**
  * afterDeleteで使いたいので削除前に削除対象のデータを保持しておく
@@ -100,12 +100,12 @@ class AuthorizationKeyBehavior extends ModelBehavior {
  * @return bool
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-    public function beforeDelete(Model $Model, $cascade = true) {
-        if ($cascade) {
-            $this->_deleteTargetData = $Model->findById($Model->id);
-        }
-        return true;
-    }
+	public function beforeDelete(Model $Model, $cascade = true) {
+		if ($cascade) {
+			$this->_deleteTargetData = $Model->findById($Model->id);
+		}
+		return true;
+	}
 
 /**
  * 削除されたデータに関連するタグデータのクリーンアップ
@@ -113,10 +113,10 @@ class AuthorizationKeyBehavior extends ModelBehavior {
  * @param Model $Model タグを使ってるモデル
  * @return void
  */
-    public function afterDelete(Model $Model) {
-        $contentId = $this->_deleteTargetData[$Model->alias]['id'];
-        $AuthorizationKey = $this->_getModel();
-        $AuthorizationKey->cleanup($Model, $contentId);
-    }
+	public function afterDelete(Model $Model) {
+		$contentId = $this->_deleteTargetData[$Model->alias]['id'];
+		$AuthorizationKey = $this->_getModel();
+		$AuthorizationKey->cleanup($Model, $contentId);
+	}
 
 }

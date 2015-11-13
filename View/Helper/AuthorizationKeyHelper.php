@@ -22,28 +22,28 @@ class AuthorizationKeyHelper extends FormHelper {
  *
  * @var array
  */
-    public $helpers = array(
-        'NetCommonsForm',
-    );
+	public $helpers = array(
+		'NetCommonsForm',
+	);
 /**
  * AuthorizationKey input field.
  *
  * @return string
  */
-    public function authorizationKeyInput() {
-        $authKey = '';
+	public function authorizationKeyInput() {
+		$authKey = '';
 
-        $authKey .= $this->NetCommonsForm->input('AuthorizationKey.authorization_key', array(
-            'label' => __d('authorization_keys', 'Authorization key'),
-            'placeholder' => __d('authorization_keys', 'Please input authorization key')));
+		$authKey .= $this->NetCommonsForm->input('AuthorizationKey.authorization_key', array(
+			'label' => __d('authorization_keys', 'Authorization key'),
+			'placeholder' => __d('authorization_keys', 'Please input authorization key')));
 
-        if (isset($this->_View->viewVars['authorizationKeyErrorMessage'])) {
-            $authKey .= '<div class="has-error"><div class="help-block">';
-            $authKey .= $this->_View->viewVars['authorizationKeyErrorMessage'];
-            $authKey .= '</div></div>';
-        }
+		if (isset($this->_View->viewVars['authorizationKeyErrorMessage'])) {
+			$authKey .= '<div class="has-error"><div class="help-block">';
+			$authKey .= $this->_View->viewVars['authorizationKeyErrorMessage'];
+			$authKey .= '</div></div>';
+		}
 
-        $authKey .= $this->NetCommonsForm->hidden('AuthorizationKey.authorization_hash');
-        return $authKey;
-    }
+		$authKey .= $this->NetCommonsForm->hidden('AuthorizationKey.authorization_hash');
+		return $authKey;
+	}
 }
