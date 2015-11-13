@@ -25,6 +25,7 @@ class AuthorizationKeyHelper extends FormHelper {
 	public $helpers = array(
 		'NetCommonsForm',
 	);
+
 /**
  * AuthorizationKey input field.
  *

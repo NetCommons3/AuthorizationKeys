@@ -37,13 +37,13 @@ class AuthorizationKeyBehavior extends ModelBehavior {
 		return $model;
 	}
 
-	/**
-	 * setup
-	 *
-	 * @param Model $Model モデル
-	 * @param array $settings 設定値
-	 * @return void
-	 */
+/**
+ * setup
+ *
+ * @param Model $Model モデル
+ * @param array $settings 設定値
+ * @return void
+ */
 	public function setup(Model $Model, $settings = array()) {
 		$this->settings[$Model->alias] = $settings;
 	}

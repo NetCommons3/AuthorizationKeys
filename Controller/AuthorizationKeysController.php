@@ -18,6 +18,7 @@ App::uses('AppController', 'Controller');
  * @package NetCommons\AuthorizationKeys\Controller
  */
 class AuthorizationKeysController extends AuthorizationKeysAppController {
+
 /**
  * use components
  *
@@ -40,6 +41,7 @@ class AuthorizationKeysController extends AuthorizationKeysAppController {
 		'NetCommons.Token',
 		'AuthorizationKeys.AuthorizationKey'
 	];
+
 /**
  * beforeFilter
  *
@@ -53,7 +55,7 @@ class AuthorizationKeysController extends AuthorizationKeysAppController {
 		if ($this->RequestHandler->accepts('json')) {
 			$this->viewClass = '';
 			$this->layout = true;
- 		}
+		}
 	}
 /**
  * view method

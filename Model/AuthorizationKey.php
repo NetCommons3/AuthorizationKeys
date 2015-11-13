@@ -89,8 +89,9 @@ class AuthorizationKey extends AuthorizationKeysAppModel {
  * @param string $modelName 使用モデルのモデル名
  * @param int $contentId 関連づくコンテンツのID
  * @param string $key 認証キー
- * @param string additionalId 付加情報ID
+ * @param string $additionalId 付加情報ID
  * @return bool
+ * @throws Exception
  */
 	public function saveAuthorizationKey($modelName, $contentId, $key, $additionalId = null) {
 		try {
@@ -118,7 +119,7 @@ class AuthorizationKey extends AuthorizationKeysAppModel {
  * 認証キーの削除
  *
  * @param Model $Model 認証キー使用モデル
- * @param int $blockId ブロックID
+ * @param int $contentId コンテンツID
  * @return void
  */
 	public function cleanup(Model $Model, $contentId) {

@@ -24,6 +24,7 @@ class AuthorizationKeyComponent extends Component {
  * @var array
  */
 	public $components = array('Session', 'Flash', 'RequestHandler', 'NetCommons.NetCommons');
+
 /**
  * captcha operation type
  *
@@ -33,6 +34,7 @@ class AuthorizationKeyComponent extends Component {
 	const OPERATION_EMBEDDING = 'embedding';
 	const OPERATION_POPUP = 'popup';
 	const OPERATION_NONE = 'none';
+
 /**
  * 認証キープラグイン 処理イメージ
  * デフォルトは埋め込み方式とする
@@ -119,6 +121,7 @@ class AuthorizationKeyComponent extends Component {
 		$this->controller = $controller;
 		$this->AuthorizationKey = ClassRegistry::init('AuthorizationKeys.AuthorizationKey', true);
 	}
+
 /**
  * Called after the Controller::beforeFilter() and before the controller action
  *
@@ -168,13 +171,14 @@ class AuthorizationKeyComponent extends Component {
 			$this->_popupStartup($controller);
 			return;
 		}
-		return;
 	}
+
 /**
  * _redirectStartup
  * 認証に成功したあとの戻りURLをセッションに保存して
  * 切り替え型の画面を呼び出す
  *
+ * @param Controller $controller Controller with components to startup
  * @return void
  */
 	protected function _redirectStartup(Controller $controller) {
@@ -197,15 +201,18 @@ class AuthorizationKeyComponent extends Component {
 			$controller->Session->write('AuthorizationKey.returnUrl.' . $this->_hashKey, $returnUrl . '?' . http_build_query($this->controller->request->query));
 			$controller->redirect(NetCommonsUrl::actionUrl($this->AuthorizeKeyAction));
 		}
-		return;
 	}
+
 /**
  * _popupStartup
  * POPUP型の場合はGetアクセスをはじく
  * POSTが来たときは、送信された認証キーとControllerが指定しているmodel, contentId, additionalIdでDBからデータを取り出し
  * マッチするか確認する
  * 一致しない場合は、前の画面を再度呼び出す
+ *
+ * @param Controller $controller Controller with components to startup
  * @return void
+ * @throws ForbiddenException
  */
 	protected function _popupStartup(Controller $controller) {
 		// 現在実行されようとしているActionがガード対象のものであればチェックを走らせる
@@ -219,17 +226,17 @@ class AuthorizationKeyComponent extends Component {
 				if (! isset($data['AuthorizationKey']['authorization_key']) ||
 					$authKey['AuthorizationKey']['authorization_key'] !== $data['AuthorizationKey']['authorization_key']) {
 					$this->_setErrorMessage();
-					$controller->redirect($controller->referer());  // 元に戻す
+					$controller->redirect($controller->referer());	// 元に戻す
 				}
 			} else {
 				// POPUP型のガード処理でPOST以外で来ているということはURL強制HACK!
 				throw new ForbiddenException(__d('authorization_keys', 'you can not access without entering authorization key.'));	// 許さない
-				return false;
 			}
 		}
 		// それ以外の場合は何もせず通す
 		return true;
 	}
+
 /**
  * getReturnUrl get return screen url
  *
@@ -239,6 +246,7 @@ class AuthorizationKeyComponent extends Component {
 		$hashKey = $this->controller->request->data['AuthorizationKey']['authorization_hash'];
 		return $this->controller->Session->read('AuthorizationKey.returnUrl.' . $hashKey);
 	}
+
 /**
  * check input response
  *
@@ -254,9 +262,11 @@ class AuthorizationKeyComponent extends Component {
 
 		return $ret;
 	}
+
 /**
  * check input response
  *
+ * @param array $data Hash data for check
  * @return bool
  */
 	public function validateKey($data) {
@@ -280,14 +290,15 @@ class AuthorizationKeyComponent extends Component {
 			return false;
 		}
 
-		if ( $authorizationKey['AuthorizationKey']['authorization_key'] === $data['AuthorizationKey']['authorization_key']) {
-			// TODO OKになったときは認証キーのセッション情報をクリアすべきかな
+		if ($authorizationKey['AuthorizationKey']['authorization_key'] === $data['AuthorizationKey']['authorization_key']) {
+			// FIXME OKになったときは認証キーのセッション情報をクリアすべきかな
 			return true;
 		} else {
 			$this->controller->set('authorizationKeyErrorMessage', __d('authorization_keys', 'answer was NOT valid! Please try again.'));
 			return false;
 		}
 	}
+
 /**
  * set error message
  *
