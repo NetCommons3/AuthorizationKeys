@@ -10,7 +10,18 @@
  */
 
 /**
- * DateTime Behavior
+ * AuthorizationKeyBehavior Behavior
+ *
+ * 認証キー情報を登録、取得します。<br>
+ * モデル名、コンテンツID、認証キーをAuthorizationKeyモデルに登録します。<br>
+ * 削除時も該当する認証キーデータを削除します。<br>
+ *
+ * #### サンプルコード
+ * ```
+ * public $actsAs = array(
+ *	'AuthorizationKeys.AuthorizationKey'
+ * );
+ * ```
  *
  * @author AllCreator <info@allcreator.net>
  * @package  NetCommons\AuthorizationKey\Model\Befavior
@@ -49,7 +60,7 @@ class AuthorizationKeyBehavior extends ModelBehavior {
 	}
 
 /**
- * タグ保存処理
+ * 認証キー保存処理
  *
  * @param Model $Model モデル
  * @param bool $created 新規作成
@@ -95,7 +106,7 @@ class AuthorizationKeyBehavior extends ModelBehavior {
 /**
  * afterDeleteで使いたいので削除前に削除対象のデータを保持しておく
  *
- * @param Model $Model タグを使ってるモデル
+ * @param Model $Model 認証キーを使ってるモデル
  * @param bool $cascade cascade
  * @return bool
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
@@ -108,9 +119,9 @@ class AuthorizationKeyBehavior extends ModelBehavior {
 	}
 
 /**
- * 削除されたデータに関連するタグデータのクリーンアップ
+ * 削除されたデータに関連する認証キーデータのクリーンアップ
  *
- * @param Model $Model タグを使ってるモデル
+ * @param Model $Model 認証キーを使ってるモデル
  * @return void
  */
 	public function afterDelete(Model $Model) {

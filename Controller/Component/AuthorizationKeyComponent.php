@@ -13,6 +13,12 @@ App::uses('Component', 'Controller');
 /**
  * AuthorizationKey Component
  *
+ * キー認証画面へのリダイレクト、認証処理を行います。<br>
+ * 利用方式、対象アクション、認証要素key名称を指定してください。
+ *
+ * [利用方式](#operationtype)<br>
+ * [対象アクション](#operationtype)
+ *
  * @author AllCreator <info@allcreator.net>
  * @package NetCommons\AuthorizationKey\Controller\Component
  */
@@ -36,10 +42,66 @@ class AuthorizationKeyComponent extends Component {
 	const OPERATION_NONE = 'none';
 
 /**
- * 認証キープラグイン 処理イメージ
- * デフォルトは埋め込み方式とする
- * このプラグインの振る舞いを変更したい場合は。ControllerでComponentを組み込むときに配列引数を与えて設定するか
- * ControllerのbeforeFilterでこの属性値を変更することで行える
+ * 利用方式
+ *
+ * * OPERATION_REDIRECT<br>
+ * 切り替わり方式<br>
+ * 認証が必要な画面を表示する前に、キー認証画面が自動的に表示される方式です。<br>
+ * キー認証に成功した後、認証が必要な画面を表示します。<br>
+ * この場合、キー認証画面、認証Postを当プラグインが処理するため、、
+ * 利用プラグインは、AuthorizationKeyを設定するのみです。<br>
+ * 対象アクション名も指定してください。
+ *
+ * #### サンプルコード
+ * ```
+ * public $components = array(
+ * 	'AuthorizationKeys.AuthorizationKey' => array(
+ * 		'operationType' => AuthorizationKeyComponent::OPERATION_REDIRECT,
+ * 		'targetAction' => 'answer'
+ * 	)
+ * )
+ * ```
+ *
+ * * OPERATION_EMBEDDING<br>
+ * 埋め込み方式(デフォルト)<br>
+ * 認証が必要な画面に、キー認証パーツを埋め込む方式です。<br>
+ * 切り替わり方式だと画像認証画面だけが表示されることになるが、埋め込み方式は認証が必要な画面の任意の場所に埋め込めます。<br>
+ * この場合は、AuthorizationKeyComponentを設定、viewファイルへのedit_form.ctpの埋め込み、
+ * 正しい回答がされたかのチェックを行う必要があります。<br>
+ *
+ * #### サンプルコード
+ * ##### Controller
+ * ```
+ * public $components = array(
+ * 	'AuthorizationKeys.AuthorizationKey' => array(
+ * 		'operationType' => AuthorizationKeyComponent::OPERATION_EMBEDDING
+ * 	)
+ * )
+ * ```
+ * ##### View
+ * ```
+ * <?php
+ * 	echo $this->element('AuthorizationKeys.edit_form');
+ * ?>
+ * ```
+ *
+ * * OPERATION_POPUP<br>
+ * ポップアップ方式<br>
+ * 認証が必要なリンクをクリックされた際に、ポップアップでキー認証画面を表示する方式です。<br>
+ * キー認証に成功した後、リンク先を表示します。<br>
+ * この場合、キー認証画面、認証Postを当プラグインが処理するため、、
+ * 利用プラグインは、AuthorizationKeyComponentを設定するのみです。<br>
+ * 対象アクション名も指定してください。
+ *
+ * #### サンプルコード
+ * ```
+ * public $components = array(
+ * 	'AuthorizationKeys.AuthorizationKey' => array(
+ * 		'operationType' => AuthorizationKeyComponent::OPERATION_POPUP,
+ * 		'targetAction' => 'answer'
+ * 	)
+ * )
+ * ```
  *
  * @var string
  */

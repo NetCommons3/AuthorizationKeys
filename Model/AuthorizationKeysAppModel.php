@@ -11,6 +11,9 @@
 
 App::uses('AppModel', 'Model');
 
+/**
+ * Summary for AuthorizationKeysAppModel
+ */
 class AuthorizationKeysAppModel extends AppModel {
 
 }
