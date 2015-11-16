@@ -11,6 +11,11 @@
 | ------------ | ------ |
 | composer.json | [![Dependency Status](https://www.versioneye.com/user/projects/564003e39e3b31000f000019/badge.svg?style=flat)](https://www.versioneye.com/user/projects/564003e39e3b31000f000019) |
 
-### [AuthorizationKeyComponent](https://github.com/NetCommons3/NetCommons3Docs/blob/master/phpdocMd/AuthorizationKeys/AuthorizationKeyComponent.md#authorizationkeycomponent)
+### 概要
+既知のユーザーのみアクセスできるように、認証キー機能を提供します。<br>
+利用するコントローラーでVisualCaptchaComponentを定義してください。<br>
+キーデータを保持するモデルにはAuthorizationKeyBehaviorを定義してください。
 
-### [AuthorizationKeyBehavior](https://github.com/NetCommons3/NetCommons3Docs/blob/master/phpdocMd/AuthorizationKeys/AuthorizationKeyBehavior.md#authorizationkeybehavior)
+#### [AuthorizationKeyComponent](https://github.com/NetCommons3/NetCommons3Docs/blob/master/phpdocMd/AuthorizationKeys/AuthorizationKeyComponent.md#authorizationkeycomponent)
+
+#### [AuthorizationKeyBehavior](https://github.com/NetCommons3/NetCommons3Docs/blob/master/phpdocMd/AuthorizationKeys/AuthorizationKeyBehavior.md#authorizationkeybehavior)
