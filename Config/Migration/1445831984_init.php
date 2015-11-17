@@ -8,6 +8,13 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
+
+/**
+ * Init migration
+ *
+ * @author AllCreator <info@allcreator.net>
+ * @package NetCommons\AuthorizationKeys\Config\Migration
+ */
 class Init extends CakeMigration {
 
 /**

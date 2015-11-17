@@ -8,7 +8,14 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
  */
-
+/**
+ * Schema file
+ *
+ * @author AllCreator <info@allcreator.net>
+ * @package NetCommons\AuthorizationKeys\Config\Schema
+ * @SuppressWarnings(PHPMD.LongVariable)
+ * @SuppressWarnings(PHPMD.TooManyFields)
+ */
 class AuthorizationKeysSchema extends CakeSchema {
 
 /**
