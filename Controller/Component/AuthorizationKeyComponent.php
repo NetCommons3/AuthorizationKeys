@@ -155,15 +155,6 @@ class AuthorizationKeyComponent extends Component {
 	);
 
 /**
- * 認証後戻るURL
- * 切り替え型の時しか使わない
- * 切り替え型で、認証キー成功時戻る先のURL
- *
- * @var array
- */
-	public $returnUrl = array();
-
-/**
  * 切り替え方式、埋め込み方式の場合
  * キー入力画面を表示する前のタイミングでセッションに取り扱い認証キー情報を書き込む
  * その書き込むときのセッションキー情報
@@ -244,13 +235,6 @@ class AuthorizationKeyComponent extends Component {
  * @return void
  */
 	protected function _redirectStartup(Controller $controller) {
-		// 戻り先URL準備
-		$this->returnUrl = array(
-				'plugin' => Inflector::underscore(Current::read('Plugin.key')),
-				'controller' => Inflector::underscore($this->controller->name),
-				'action' => Inflector::underscore($this->controller->action),
-			) + $this->controller->request->query;
-
 		// リダイレクトURL準備
 		$this->AuthorizeKeyAction[] = $this->_hashKey;
 		$this->AuthorizeKeyAction['frame_id'] = Current::read('Frame.id');
