@@ -18,17 +18,17 @@
 		<?php echo $this->NetCommonsForm->hidden('Frame.id'); ?>
 		<?php echo $this->NetCommonsForm->hidden('Block.id'); ?>
 
-		<?php echo $this->AuthorizationKey->authorizationKeyInput(); ?>
+		<?php echo $this->element('AuthorizationKeys.authorization_key'); ?>
 
-	<div class="text-center">
-		<?php echo $this->BackTo->pageLinkButton(__d('net_commons', 'Cancel'), array('icon' => 'remove')); ?>
-		<?php echo $this->NetCommonsForm->button(
-		__d('net_commons', 'OK') . ' <span class="glyphicon glyphicon-chevron-right"></span>',
-		array(
-		'class' => 'btn btn-primary',
-		'name' => 'next_' . '',
-		)) ?>
-	</div>
+		<div class="text-center">
+			<?php echo $this->BackTo->pageLinkButton(__d('net_commons', 'Cancel'), array('icon' => 'remove')); ?>
+			<?php echo $this->NetCommonsForm->button(
+			__d('net_commons', 'OK') . ' <span class="glyphicon glyphicon-chevron-right"></span>',
+			array(
+			'class' => 'btn btn-primary',
+			'name' => 'next_' . '',
+			)) ?>
+		</div>
 
 	<?php echo $this->NetCommonsForm->end(); ?>
 </article>

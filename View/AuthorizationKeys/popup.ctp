@@ -16,7 +16,7 @@
 			<h3><?php echo __d('authorization_keys', 'Authorization key confirm dialog'); ?></h3>
 		</div>
 		<div class="modal-body">
-				<?php echo $this->AuthorizationKey->authorizationKeyInput(); ?>
+			<?php echo $this->element('AuthorizationKeys.authorization_key'); ?>
 		</div>
 		<div class="modal-footer">
 			<button class="btn btn-default" type="button" ng-click="cancel()"><?php echo __d('net_commons', 'Cancel'); ?></button>
