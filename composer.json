@@ -1,5 +1,5 @@
 {
-    "name": "netcommons/authorzation_keys",
+    "name": "netcommons/authorzation-keys",
     "description": "AuthorizationKeys for NetCommons Plugin",
     "homepage": "http://www.netcommons.org/",
     "extra": {
@@ -47,7 +47,7 @@
         }
     ],
     "type":        "cakephp-plugin",
-    "keywords":    ["cakephp", "authorization_keys"],
+    "keywords":    ["cakephp", "authorization-keys"],
     "config": {
         "vendor-dir": "vendors"
     }
