@@ -10,15 +10,15 @@
 ?>
 
 <?php echo
-    $this->NetCommonsForm->input('AuthorizationKey.authorization_key', array(
-        'label' => __d('authorization_keys', 'Authorization key'),
-        'placeholder' => __d('authorization_keys', 'Please input authorization key')));
+	$this->NetCommonsForm->input('AuthorizationKey.authorization_key', array(
+		'label' => __d('authorization_keys', 'Authorization key'),
+		'placeholder' => __d('authorization_keys', 'Please input authorization key')));
 ?>
 <?php if (isset($authorizationKeyErrorMessage)): ?>
-    <div class="has-error">
-        <div class="help-block">
-            <?php echo $authorizationKeyErrorMessage; ?>
-        </div>
-    </div>
+	<div class="has-error">
+		<div class="help-block">
+			<?php echo $authorizationKeyErrorMessage; ?>
+		</div>
+	</div>
 <?php endif ?>
-<?php echo $this->NetCommonsForm->hidden('AuthorizationKey.authorization_hash'); ?>
+<?php echo $this->NetCommonsForm->hidden('AuthorizationKey.authorization_hash');
