@@ -189,10 +189,30 @@ class AuthorizationKeyComponent extends Component {
 			return;
 		}
 
+		if ($this->model === null || $this->contentId === null) {
+			// model, contentIdが未設定なら抜ける
+			return;
+		}
+		$this->_guard();
+	}
+
+	public function guard($operationType, $modelName, $data, $additionalId = null) {
+		if(Hash::get($data, 'AuthorizationKey', false)) {
+			$id = $data[$modelName]['id'];
+
+			$this->operationType = $operationType;
+			$this->model = $modelName;
+			$this->contentId = $id;
+			//$this->additionalId = $additionalId;
+			$this->_guard();
+		}
+	}
+
+	protected function _guard() {
 		// 切り替え、埋め込みの場合は認証キー動作が発生するので
 		// 指定されているModel、IDに該当する認証キー情報を取得しておく
 		//
-		if ($controller->request->isGet()) {
+		if ($this->controller->request->isGet()) {
 			// もしかしたら空データかもしれないが、ここではチェックしない
 			// 後程入力された認証キーとの一致を調べるときに空データの場合は絶対一致しなくなって
 			// 決して解除されないガードとなる
@@ -200,13 +220,13 @@ class AuthorizationKeyComponent extends Component {
 			// 後から利用となるのでセッションに記録
 			//$this->_hashKey = Security::hash($controller->name . mt_rand() . microtime(), 'md5');
 			$this->_hashKey = Security::hash($this->model . $this->contentId . $this->additionalId, 'md5');
-			$controller->Session->write(
-				'AuthorizationKey.currentAuthorizationKey.' . $this->_hashKey,
-				$this->AuthorizationKey->getAuthorizationKeyByContentId($this->model, $this->contentId, $this->additionalId));
+			$this->controller->Session->write(
+					'AuthorizationKey.currentAuthorizationKey.' . $this->_hashKey,
+					$this->AuthorizationKey->getAuthorizationKeyByContentId($this->model, $this->contentId, $this->additionalId));
 
 			// Controllerにキーを探し出すためのハッシュキーを覚えておいてもらう
 			// 実際の認証キーinputを生成するときに、この値がhiddenで埋め込まれる
-			$controller->request->data['AuthorizationKey']['authorization_hash'] = $this->_hashKey;
+			$this->controller->request->data['AuthorizationKey']['authorization_hash'] = $this->_hashKey;
 		}
 
 		// 埋め込み型の時
@@ -216,16 +236,15 @@ class AuthorizationKeyComponent extends Component {
 		}
 		// 切り替え型のとき
 		if ($this->operationType == AuthorizationKeyComponent::OPERATION_REDIRECT) {
-			$this->_redirectStartup($controller);
+			$this->_redirectStartup($this->controller);
 			return;
 		}
 		// POPUP型の時
 		if ($this->operationType == AuthorizationKeyComponent::OPERATION_POPUP) {
-			$this->_popupStartup($controller);
+			$this->_popupStartup($this->controller);
 			return;
 		}
 	}
-
 /**
  * _redirectStartup
  * 認証に成功したあとの戻りURLをセッションに保存して
