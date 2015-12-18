@@ -25,7 +25,6 @@ class AuthorizationKeysController extends AuthorizationKeysAppController {
  * @var array
  */
 	public $components = array(
-		'Pages.PageLayout',
 		'AuthorizationKeys.AuthorizationKey' => array(
 			'operationType' => 'none',
 		),
@@ -51,6 +50,9 @@ class AuthorizationKeysController extends AuthorizationKeysAppController {
 
 		$this->Auth->allow('view', 'popup');
 
+		if ($this->action == 'view') {
+			$this->PageLayout = $this->Components->load('Pages.PageLayout');
+		}
 		if ($this->RequestHandler->accepts('json')) {
 			$this->viewClass = '';
 			$this->layout = true;
