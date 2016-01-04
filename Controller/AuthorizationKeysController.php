@@ -36,7 +36,6 @@ class AuthorizationKeysController extends AuthorizationKeysAppController {
  *
  */
 	public $helpers = [
-		'NetCommons.BackToPage',
 		'NetCommons.Token',
 	];
 
