@@ -49,7 +49,7 @@ class TestAuthorizationKeysController extends AuthorizationKeysController {
  */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('index', 'none_test', 'no_content_test', 'embed', 'popup');
+		$this->Auth->allow('index', 'none_test', 'no_content_test', 'embed', 'popup', 'key_guard', 'edit');
 
 		if ($this->action == 'none_test') {
 			$this->AuthorizationKey->operationType = 'none';
@@ -111,5 +111,24 @@ class TestAuthorizationKeysController extends AuthorizationKeysController {
 				return;
 			}
 		}
+	}
+
+/**
+ * guard method
+ *
+ * @return void
+ */
+	public function key_guard() {
+		$this->AuthorizationKey->guard('aaaa', 'test', array(
+			'test' => array('id' => 1),
+			'AuthorizationKey' => array('authorization_key' => 'aaa')));
+	}
+
+/**
+ * edit method
+ *
+ * @return void
+ */
+	public function edit() {
 	}
 }

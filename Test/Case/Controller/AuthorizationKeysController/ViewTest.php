@@ -115,5 +115,4 @@ class AuthorizationKeysControllerViewTest extends NetCommonsControllerTestCase {
 
 		$this->assertTextContains('netcommons', $result);
 	}
-
 }

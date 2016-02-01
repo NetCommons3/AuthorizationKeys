@@ -131,4 +131,41 @@ class AuthorizationKeysControllerMockTest extends NetCommonsControllerTestCase {
 		$this->assertTextContains('embed_view_ctp', $result);
 	}
 
+/**
+ * アクションのGETテスト
+ * 自前guaadタイプのパターン
+ *
+ * @return void
+ */
+	public function testGuardGet() {
+		//テスト実施
+		$url = array(
+			'plugin' => $this->plugin,
+			'controller' => $this->_controller,
+			'action' => 'key_guard',
+		);
+		$result = $this->testAction($url, array('method' => 'get', 'return' => 'view'));
+
+		// 画面遷移なし
+		$this->assertTextContains('guard_view_ctp', $result);
+	}
+
+/**
+ * アクションのGETテスト
+ * editの確認
+ *
+ * @return void
+ */
+	public function testEditGet() {
+		//テスト実施
+		$url = array(
+			'plugin' => $this->plugin,
+			'controller' => $this->_controller,
+			'action' => 'edit',
+		);
+		$result = $this->testAction($url, array('method' => 'get', 'return' => 'view'));
+
+		// 画面遷移なし
+		$this->assertTextContains('data[AuthorizationKey][authorization_key]', $result);
+	}
 }

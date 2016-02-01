@@ -66,9 +66,7 @@ class AuthorizationKeysControllerPopupTest extends NetCommonsControllerTestCase 
 
 		//URL設定
 		$params = array();
-		if ($return === 'viewFile') {
-			$params['return'] = 'view';
-		} elseif ($return === 'json') {
+		if ($return === 'json') {
 			$params['return'] = 'view';
 			$params['type'] = 'json';
 			if ($exception === 'BadRequestException') {
@@ -85,7 +83,13 @@ class AuthorizationKeysControllerPopupTest extends NetCommonsControllerTestCase 
 
 		//テスト実施
 		$view = $this->testAction($url, $params);
-		$result = $view;
+		if ($return === 'json') {
+			$result = json_decode($this->contents, true);
+			$this->assertArrayHasKey('code', $result);
+			$this->assertEquals($status, $result['code']);
+		} else {
+			$result = $view;
+		}
 
 		if (! $exception && $assert) {
 			if ($assert['method'] === 'assertActionLink') {
@@ -121,5 +125,4 @@ class AuthorizationKeysControllerPopupTest extends NetCommonsControllerTestCase 
 		);
 		return $results;
 	}
-
 }

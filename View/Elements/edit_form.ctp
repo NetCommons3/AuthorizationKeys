@@ -10,5 +10,8 @@
  */
 ?>
 <?php
+	if (! isset($options)) {
+		$options = array();
+	}
 	echo $this->NetCommonsForm->input('AuthorizationKey.authorization_key', array_merge(
 		array('label' => false), $options));
