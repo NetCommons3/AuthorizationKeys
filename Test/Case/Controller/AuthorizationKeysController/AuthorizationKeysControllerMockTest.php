@@ -18,7 +18,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @package NetCommons\AuthorizationKeys\Test\Case\Controller
  * @SuppressWarnings(PHPMD.LongVariable)
  */
-class AuthorizationKeysControllerTest extends NetCommonsControllerTestCase {
+class AuthorizationKeysControllerMockTest extends NetCommonsControllerTestCase {
 
 /**
  * Fixtures
@@ -55,6 +55,7 @@ class AuthorizationKeysControllerTest extends NetCommonsControllerTestCase {
 
 /**
  * アクションのGETテスト
+ * index へアクセスしてリダイレクトされるパターン
  *
  * @return void
  */
@@ -65,7 +66,7 @@ class AuthorizationKeysControllerTest extends NetCommonsControllerTestCase {
 			'controller' => $this->_controller,
 			'action' => 'index',
 		);
-		$this->testAction($url);
+		$this->testAction($url, array('method' => 'get'));
 		$result = $this->headers['Location'];
 		$expected = Router::url(array(
 			'plugin' => 'authorization_keys',
@@ -73,11 +74,12 @@ class AuthorizationKeysControllerTest extends NetCommonsControllerTestCase {
 			'action' => 'view',
 		), true);
 		// 認証キー画面にリダイレクトされたことを確認
-		$this->assertEquals($result, $expected);
+		$this->assertTextContains($expected, $result);
 	}
 
 /**
  * アクションのGETテスト
+ * operationTypeがnoneで何も起こらないタイプのパターン
  *
  * @return void
  */
@@ -88,13 +90,14 @@ class AuthorizationKeysControllerTest extends NetCommonsControllerTestCase {
 			'controller' => $this->_controller,
 			'action' => 'none_test',
 		);
-		$result = $this->testAction($url, array('return' => 'view'));
+		$result = $this->testAction($url, array('method' => 'get', 'return' => 'view'));
 		// 画面遷移なし
 		$this->assertTextContains('none_test_view_ctp', $result);
 	}
 
 /**
  * アクションのGETテスト
+ * content_idが抜けていてなにも動作しないパターン
  *
  * @return void
  */
@@ -105,13 +108,14 @@ class AuthorizationKeysControllerTest extends NetCommonsControllerTestCase {
 			'controller' => $this->_controller,
 			'action' => 'no_content_test',
 		);
-		$result = $this->testAction($url, array('return' => 'view'));
+		$result = $this->testAction($url, array('method' => 'get', 'return' => 'view'));
 		// 画面遷移なし
 		$this->assertTextContains('no_content_test_view_ctp', $result);
 	}
 
 /**
  * アクションのGETテスト
+ * 埋め込みタイプのパターン
  *
  * @return void
  */
@@ -122,7 +126,7 @@ class AuthorizationKeysControllerTest extends NetCommonsControllerTestCase {
 			'controller' => $this->_controller,
 			'action' => 'embed',
 		);
-		$result = $this->testAction($url, array('return' => 'view'));
+		$result = $this->testAction($url, array('method' => 'get', 'return' => 'view'));
 		// 画面遷移なし
 		$this->assertTextContains('embed_view_ctp', $result);
 	}

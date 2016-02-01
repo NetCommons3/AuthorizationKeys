@@ -49,7 +49,7 @@ class TestAuthorizationKeysController extends AuthorizationKeysController {
  */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('index', 'none_test', 'no_content_test', 'embed');
+		$this->Auth->allow('index', 'none_test', 'no_content_test', 'embed', 'popup');
 
 		if ($this->action == 'none_test') {
 			$this->AuthorizationKey->operationType = 'none';
@@ -59,6 +59,10 @@ class TestAuthorizationKeysController extends AuthorizationKeysController {
 		}
 		if ($this->action == 'embed') {
 			$this->AuthorizationKey->operationType = 'embedding';
+		}
+		if ($this->action == 'popup') {
+			$this->AuthorizationKey->operationType = 'popup';
+			$this->AuthorizationKey->targetAction = 'popup';
 		}
 	}
 
@@ -92,5 +96,20 @@ class TestAuthorizationKeysController extends AuthorizationKeysController {
  * @return void
  */
 	public function embed() {
+	}
+
+/**
+ * popup method
+ *
+ * @return void
+ */
+	public function popup() {
+		if ($this->request->isPost()) {
+			if (! $this->AuthorizationKey->check()) {
+				// この画面をもう一回表示
+				$this->render('TestAuthorizationKeys.TestAuthorizationKeys/ng_popup');
+				return;
+			}
+		}
 	}
 }

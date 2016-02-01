@@ -1,0 +1,1 @@
+<?php echo 'ok_popup_view_ctp';

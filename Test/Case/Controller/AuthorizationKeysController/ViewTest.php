@@ -18,7 +18,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @package NetCommons\AuthorizationKeys\Test\Case\Controller
  * @SuppressWarnings(PHPMD.LongVariable)
  */
-class AuthorizationKeysViewControllerTest extends NetCommonsControllerTestCase {
+class AuthorizationKeysControllerViewTest extends NetCommonsControllerTestCase {
 
 /**
  * Fixtures
@@ -90,4 +90,30 @@ class AuthorizationKeysViewControllerTest extends NetCommonsControllerTestCase {
 		);
 		return $results;
 	}
+
+/**
+ * アクションのGETテスト
+ * POPUPタイプのPOS - OK パターン
+ *
+ * @return void
+ */
+	public function testPost() {
+		$data = array(
+			'AuthorizationKey' => array(
+				'authorization_key' => 'test_key_authorization_fake_model',
+				'authorization_hash' => 'testSession')
+		);
+		$this->controller->Session->expects($this->any())
+			->method('read')
+			->will(
+				$this->returnValueMap([
+					['AuthorizationKey.currentAuthorizationKey.' . 'testSession', array('AuthorizationKey' => array('authorization_key' => 'test_key_authorization_fake_model'))],
+					['AuthorizationKey.returnUrl.' . 'testSession', array('http://netcommons.org')]
+				]));
+		$this->_testPostAction('post', $data, array('action' => 'view', 'block_id' => 1));
+		$result = $this->headers['Location'];
+
+		$this->assertTextContains('netcommons', $result);
+	}
+
 }

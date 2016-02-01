@@ -163,7 +163,6 @@ class AuthorizationKey extends AuthorizationKeysAppModel {
 		} catch (Exception $ex) {
 			//トランザクションRollback
 			$this->rollback($ex);
-			return false;
 		}
 
 		return true;

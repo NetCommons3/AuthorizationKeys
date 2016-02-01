@@ -18,7 +18,7 @@ App::uses('NetCommonsControllerTestCase', 'NetCommons.TestSuite');
  * @package NetCommons\AuthorizationKeys\Test\Case\Controller
  * @SuppressWarnings(PHPMD.LongVariable)
  */
-class AuthorizationKeysPopupControllerTest extends NetCommonsControllerTestCase {
+class AuthorizationKeysControllerPopupTest extends NetCommonsControllerTestCase {
 
 /**
  * Fixtures
@@ -121,4 +121,5 @@ class AuthorizationKeysPopupControllerTest extends NetCommonsControllerTestCase 
 		);
 		return $results;
 	}
+
 }
