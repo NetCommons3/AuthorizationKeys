@@ -43,5 +43,47 @@ class AuthorizationKeysFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
+		array(
+			'id' => 1,
+			'model' => 'test',
+			'content_id' => 1,
+			'additional_id' => null,
+			'authorization_key' => 'test_key'
+		),
+		array(
+			'id' => 2,
+			'model' => 'test',
+			'content_id' => 2,
+			'additional_id' => 'a',
+			'authorization_key' => 'test_key_2'
+		),
+		array(
+			'id' => 3,
+			'model' => 'test',
+			'content_id' => 2,
+			'additional_id' => 'b',
+			'authorization_key' => 'test_key_b'
+		),
+		array(
+			'id' => 4,
+			'model' => 'AuthorizationKey',
+			'content_id' => 1,
+			'additional_id' => 'a',
+			'authorization_key' => 'test_key_authorization_a'
+		),
+		array(
+			'id' => 5,
+			'model' => 'AuthorizationKey',
+			'content_id' => 1,
+			'additional_id' => 'b',
+			'authorization_key' => 'test_key_authorization_b'
+		),
+		array(
+			'id' => 6,
+			'model' => 'TestAuthorizationKeyModel',
+			'content_id' => 1,
+			'additional_id' => null,
+			'authorization_key' => 'test_key_authorization_fake_model'
+		)
 	);
 }

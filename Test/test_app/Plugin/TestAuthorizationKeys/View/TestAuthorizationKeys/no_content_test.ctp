@@ -1,0 +1,1 @@
+<?php echo 'no_content_test_view_ctp';

@@ -86,6 +86,10 @@ class AuthorizationKeysController extends AuthorizationKeysAppController {
  * @return void
  */
 	public function popup() {
+		if (! isset($this->request->query['url'])) {
+			$this->setAction('throwBadRequest');
+			return;
+		}
 		$url = $this->request->query['url'];
 		$this->set('url', $url);
 	}
