@@ -231,7 +231,7 @@ class AuthorizationKeyComponent extends Component {
 		// 切り替え、埋め込みの場合は認証キー動作が発生するので
 		// 指定されているModel、IDに該当する認証キー情報を取得しておく
 		//
-		if ($this->controller->request->isGet()) {
+		if ($this->controller->request->is('get')) {
 			// もしかしたら空データかもしれないが、ここではチェックしない
 			// 後程入力された認証キーとの一致を調べるときに空データの場合は絶対一致しなくなって
 			// 決して解除されないガードとなる
@@ -275,15 +275,21 @@ class AuthorizationKeyComponent extends Component {
 	protected function _redirectStartup(Controller $controller) {
 		// リダイレクトURL準備
 		$this->AuthorizeKeyAction[] = $this->_hashKey;
+		$this->AuthorizeKeyAction['block_id'] = Current::read('Block.id');
 		$this->AuthorizeKeyAction['frame_id'] = Current::read('Frame.id');
-		// リファラが自分自身でないことが必須（無限ループになる
-		if ($this->operationType == AuthorizationKeyComponent::OPERATION_REDIRECT
-			&& $controller->referer('', true) != NetCommonsUrl::actionUrl($this->AuthorizeKeyAction)
-			&& $controller->action == $this->targetAction) {
-			// 切り替え後、認証成功時のURLを取り出す
-			$returnUrl = $controller->here;
-			$controller->Session->write('AuthorizationKey.returnUrl.' . $this->_hashKey, $returnUrl . '?' . http_build_query($this->controller->request->query));
-			$controller->redirect(NetCommonsUrl::actionUrl($this->AuthorizeKeyAction));
+		// 現在の稼働アクションがターゲットであること
+		if ($controller->action == $this->targetAction) {
+			// OK判定が出ているか出てないならばリダイレクト
+			if (! $controller->Session->check('AuthorizationKey.judgement.' . $this->_hashKey)) {
+				// 切り替え後、認証成功時のURLを取り出す
+				$returnUrl = $controller->here;
+				$controller->Session->write('AuthorizationKey.returnUrl.' . $this->_hashKey, $returnUrl . '?' . http_build_query($this->controller->request->query));
+				$controller->redirect(NetCommonsUrl::actionUrl($this->AuthorizeKeyAction));
+			} else {
+				// 出ているときはリダイレクトない
+				// そのままガード外して目的の画面へ行かせるので、ここでOK判定を消しておく
+				$controller->Session->delete('AuthorizationKey.judgement.' . $this->_hashKey);
+			}
 		}
 	}
 
@@ -301,7 +307,7 @@ class AuthorizationKeyComponent extends Component {
 	protected function _popupStartup(Controller $controller) {
 		// 現在実行されようとしているActionがガード対象のものであればチェックを走らせる
 		if ($controller->action == $this->targetAction) {
-			if ($controller->request->isPost() || $controller->request->isPut()) {
+			if ($controller->request->is('post') || $controller->request->is('put')) {
 				// POPUPのときはここでDBからデータを取り出す
 				$authKey = $this->AuthorizationKey->getAuthorizationKeyByContentId($this->model, $this->contentId, $this->additionalId);
 				//
@@ -342,6 +348,12 @@ class AuthorizationKeyComponent extends Component {
 		$ret = $this->validateKey($reqData);
 		if ($ret === false) {
 			$this->_setErrorMessage();
+		} else {
+			// 判定セッション情報はリダイレクトの処理専用
+			if ($this->controller->name == 'AuthorizationKeys') {
+				$hashKey = $reqData['AuthorizationKey']['authorization_hash'];
+				$this->controller->Session->write('AuthorizationKey.judgement.' . $hashKey, 'OK');
+			}
 		}
 
 		return $ret;

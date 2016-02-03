@@ -60,6 +60,7 @@ class AuthorizationKeysControllerViewTest extends NetCommonsControllerTestCase {
 			'controller' => $this->_controller,
 			'action' => 'view',
 			'frame_id' => 6,
+			'block_id' => 2,
 		), $urlOptions);
 
 		$this->_testGetAction($url, $assert, $exception, $return);
@@ -108,9 +109,10 @@ class AuthorizationKeysControllerViewTest extends NetCommonsControllerTestCase {
 			->will(
 				$this->returnValueMap([
 					['AuthorizationKey.currentAuthorizationKey.' . 'testSession', array('AuthorizationKey' => array('authorization_key' => 'test_key_authorization_fake_model'))],
-					['AuthorizationKey.returnUrl.' . 'testSession', array('http://netcommons.org')]
+					['AuthorizationKey.returnUrl.' . 'testSession', array('http://netcommons.org')],
+					['AuthorizationKey.judgement.' . 'testSession', array('OK')],
 				]));
-		$this->_testPostAction('post', $data, array('action' => 'view', 'block_id' => 1));
+		$this->_testPostAction('post', $data, array('action' => 'view', 'block_id' => 2, 'testSession'));
 		$result = $this->headers['Location'];
 
 		$this->assertTextContains('netcommons', $result);
