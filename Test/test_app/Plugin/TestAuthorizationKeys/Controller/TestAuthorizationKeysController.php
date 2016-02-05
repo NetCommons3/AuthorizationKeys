@@ -26,6 +26,7 @@ class TestAuthorizationKeysController extends AuthorizationKeysController {
  */
 	public $components = array(
 		'Security' => false,
+		'Session',
 		'AuthorizationKeys.AuthorizationKey' => array(
 			'operationType' => 'redirect',
 			'targetAction' => 'index',
@@ -49,7 +50,7 @@ class TestAuthorizationKeysController extends AuthorizationKeysController {
  */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('index', 'none_test', 'no_content_test', 'embed', 'popup', 'key_guard', 'edit');
+		$this->Auth->allow('index', 'index2', 'none_test', 'no_content_test', 'embed', 'popup', 'key_guard', 'edit', 'key_write');
 
 		if ($this->action == 'none_test') {
 			$this->AuthorizationKey->operationType = 'none';

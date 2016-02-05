@@ -125,4 +125,32 @@ class AuthorizationKeysControllerPopupTest extends NetCommonsControllerTestCase 
 		);
 		return $results;
 	}
+
+/**
+ * testPopupPost
+ *
+ * @return void
+ */
+	public function testPopupPost() {
+		$controller = $this->generate('AuthorizationKeys.AuthorizationKeys', array(
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+				'Security',
+				'RequestHandler',
+				'AuthorizationKeys.AuthorizationKey'
+			)
+		));
+		$controller->RequestHandler->expects($this->any())
+			->method('accepts')
+			->will(
+				$this->returnValue(true));
+		$this->setExpectedException('BadRequestException');
+
+		$this->_testPostAction('post', array(),
+			array(
+				'plugin' => 'authorization_keys',
+				'controller' => 'authorization_key',
+				'action' => 'popup', 'block_id' => 2, 'frame_id' => 6));
+	}
 }

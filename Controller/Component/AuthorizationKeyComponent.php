@@ -344,7 +344,6 @@ class AuthorizationKeyComponent extends Component {
  */
 	public function check() {
 		$reqData = $this->controller->request->data;
-
 		$ret = $this->validateKey($reqData);
 		if ($ret === false) {
 			$this->_setErrorMessage();
@@ -376,7 +375,6 @@ class AuthorizationKeyComponent extends Component {
 		// そのデータがセッション内容と一致するか確認し
 		// OK/NGを返す
 		$authorizationKey = $this->controller->Session->read('AuthorizationKey.currentAuthorizationKey.' . $hashKey);
-
 		// セッションに情報がない　エラー
 		if (! $authorizationKey) {
 			return false;

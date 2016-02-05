@@ -79,6 +79,26 @@ class AuthorizationKeysControllerMockTest extends NetCommonsControllerTestCase {
 
 /**
  * アクションのGETテスト
+ * index へアクセスして通されるパターン
+ *
+ * @return void
+ */
+	public function testIndexGet2() {
+		$this->controller->Session->expects($this->any())
+			->method('check')
+			->will($this->returnValue(true));
+		//テスト実施
+		$url = array(
+			'plugin' => $this->plugin,
+			'controller' => $this->_controller,
+			'action' => 'index',
+		);
+		$result = $this->testAction($url, array('method' => 'get', 'return' => 'view'));
+		$this->assertTextContains('index', $result);
+	}
+
+/**
+ * アクションのGETテスト
  * operationTypeがnoneで何も起こらないタイプのパターン
  *
  * @return void
