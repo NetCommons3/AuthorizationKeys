@@ -4,7 +4,7 @@
 var AuthorizationKeys = angular.module('AuthorizationKeys', []);
 
 AuthorizationKeys.directive('authorizationKeysPopupLink',
-    ['$modal', function($modal) {
+    ['$uibModalInstance', function($uibModalInstance) {
       return {
         scope: {
           url: '@',
@@ -13,7 +13,7 @@ AuthorizationKeys.directive('authorizationKeysPopupLink',
         restrict: 'A',
         link: function(scope, element, attr, controller) {
           var Popup = function(event) {
-            scope.modalInstance = $modal.open({
+            scope.modalInstance = $uibModalInstance.open({
               animation: true,
               templateUrl:
                '/authorization_keys/authorization_keys/popup/?frame_id=' +
@@ -37,12 +37,12 @@ AuthorizationKeys.directive('authorizationKeysPopupLink',
 NetCommonsApp.requires.push('AuthorizationKeys');
 
 NetCommonsApp.controller('authorizationKeyPopupCtrl',
-    function($scope, $modalInstance, url) {
+    function($scope, $uibModalInstance, url) {
       $scope.url = url;
       $scope.submit = function() {
-        $modalInstance.dismiss('submit');
+        $uibModalInstance.dismiss('submit');
       };
       $scope.cancel = function() {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     });
