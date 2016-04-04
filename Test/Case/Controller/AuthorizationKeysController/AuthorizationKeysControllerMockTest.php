@@ -68,11 +68,7 @@ class AuthorizationKeysControllerMockTest extends NetCommonsControllerTestCase {
 		);
 		$this->testAction($url, array('method' => 'get'));
 		$result = $this->headers['Location'];
-		$expected = Router::url(array(
-			'plugin' => 'authorization_keys',
-			'controller' => 'authorization_keys',
-			'action' => 'view',
-		), true);
+		$expected = '/authorization_keys/authorization_keys/view';
 		// 認証キー画面にリダイレクトされたことを確認
 		$this->assertTextContains($expected, $result);
 	}
