@@ -37,3 +37,8 @@ msgstr "認証キー"
 msgid "Please input authorization key"
 msgstr "認証キーを入力してください"
 
+msgid "Compression password"
+msgstr "圧縮パスワード"
+
+msgid "please input compression password"
+msgstr "ファイルの圧縮パスワードを入力してください"

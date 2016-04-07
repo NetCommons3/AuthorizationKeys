@@ -11,8 +11,8 @@
 
 <?php echo
 	$this->NetCommonsForm->input('AuthorizationKey.authorization_key', array(
-		'label' => __d('authorization_keys', 'Authorization key'),
-		'placeholder' => __d('authorization_keys', 'Please input authorization key')));
+		'label' => '{{popupLabel}}',
+		'placeholder' => '{{popupPlaceholder}}'));
 ?>
 <?php if (isset($authorizationKeyErrorMessage)): ?>
 	<div class="has-error">

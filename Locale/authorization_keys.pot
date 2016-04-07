@@ -37,3 +37,8 @@ msgstr ""
 msgid "Please input authorization key"
 msgstr ""
 
+msgid "Compression password"
+msgstr ""
+
+msgid "please input compression password"
+msgstr ""

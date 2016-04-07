@@ -13,7 +13,7 @@
 	<?php echo $this->NetCommonsForm->create(false, array('url' => "$url", 'ng-submit' => 'submit()')); ?>
 
 		<div class="modal-header">
-			<h3><?php echo __d('authorization_keys', 'Authorization key confirm dialog'); ?></h3>
+			<h3>{{popupTitle}}</h3>
 		</div>
 		<div class="modal-body">
 			<?php echo $this->element('AuthorizationKeys.authorization_key'); ?>

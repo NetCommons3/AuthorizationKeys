@@ -8,7 +8,10 @@ AuthorizationKeys.directive('authorizationKeysPopupLink',
       return {
         scope: {
           url: '@',
-          frameId: '@'
+          frameId: '@',
+          popupTitle: '@',
+          popupLabel: '@',
+          popupPlaceholder: '@'
         },
         restrict: 'A',
         link: function(scope, element, attr, controller) {
@@ -25,6 +28,15 @@ AuthorizationKeys.directive('authorizationKeysPopupLink',
               resolve: {
                 url: function() {
                   return scope.url;
+                },
+                popupTitle: function() {
+                  return scope.popupTitle;
+                },
+                popupLabel: function() {
+                  return scope.popupLabel;
+                },
+                popupPlaceholder: function() {
+                  return scope.popupPlaceholder;
                 }
               }
             });
@@ -37,8 +49,12 @@ AuthorizationKeys.directive('authorizationKeysPopupLink',
 NetCommonsApp.requires.push('AuthorizationKeys');
 
 NetCommonsApp.controller('authorizationKeyPopupCtrl',
-    function($scope, $uibModalInstance, url) {
+    function($scope, $uibModalInstance,
+             url, popupTitle, popupLabel, popupPlaceholder) {
       $scope.url = url;
+      $scope.popupTitle = popupTitle;
+      $scope.popupLabel = popupLabel;
+      $scope.popupPlaceholder = popupPlaceholder;
       $scope.submit = function() {
         $uibModalInstance.dismiss('submit');
       };
