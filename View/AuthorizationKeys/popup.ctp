@@ -16,7 +16,7 @@
 			<h3>{{popupTitle}}</h3>
 		</div>
 		<div class="modal-body">
-			<?php echo $this->element('AuthorizationKeys.authorization_key'); ?>
+			<?php echo $this->element('AuthorizationKeys.authorization_key_popup'); ?>
 		</div>
 		<div class="modal-footer">
 			<button class="btn btn-default" type="button" ng-click="cancel()"><?php echo __d('net_commons', 'Cancel'); ?></button>
