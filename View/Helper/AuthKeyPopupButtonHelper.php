@@ -41,7 +41,7 @@ class AuthKeyPopupButtonHelper extends AppHelper {
  * #### サンプルコード
  * ```
  * 	public $helpers = array(
- *     'AuthorizationKeys.AuthKeyPopup',
+ *     'AuthorizationKeys.AuthKeyPopupButton',
  *  );
  * <?php echo $this->AuthKeyPopupButton->popupButton(array(
  *          'url' => NetCommonsUrl::actionUrl(.......),
