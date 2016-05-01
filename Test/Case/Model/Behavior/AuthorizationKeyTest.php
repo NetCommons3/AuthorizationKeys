@@ -67,12 +67,20 @@ class AuthorizationKeyTest extends NetCommonsModelTestCase {
 	public function testAfterSave() {
 		$FakeModel = ClassRegistry::init('TestAuthorizationKeyModel');
 
+		// 普通にデータセーブ
 		$FakeModel->create();
 		$data['TestAuthorizationKeyModel']['block_id'] = 1;
 		$data['AuthorizationKey'] = array(
 			'authorization_key' => 'test_authorization_key',
 		);
 		$result = $FakeModel->save($data);
+		$this->assertInternalType('array', $result);
+
+		// 認証キーを空っぽにされたら
+		$result['AuthorizationKey'] = array(
+			'authorization_key' => '',
+		);
+		$result = $FakeModel->save($result);
 		$this->assertInternalType('array', $result);
 
 		//Tag save fail

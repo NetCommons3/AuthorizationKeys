@@ -239,9 +239,10 @@ class AuthorizationKeyComponent extends Component {
 			// 後から利用となるのでセッションに記録
 			//$this->_hashKey = Security::hash($controller->name . mt_rand() . microtime(), 'md5');
 			$this->_hashKey = Security::hash($this->model . $this->contentId . $this->additionalId, 'md5');
+			$authKey = $this->AuthorizationKey->getAuthorizationKeyByContentId(
+				$this->model, $this->contentId, $this->additionalId);
 			$this->controller->Session->write(
-					'AuthorizationKey.currentAuthorizationKey.' . $this->_hashKey,
-					$this->AuthorizationKey->getAuthorizationKeyByContentId($this->model, $this->contentId, $this->additionalId));
+					'AuthorizationKey.currentAuthorizationKey.' . $this->_hashKey, $authKey);
 
 			// Controllerにキーを探し出すためのハッシュキーを覚えておいてもらう
 			// 実際の認証キーinputを生成するときに、この値がhiddenで埋め込まれる
@@ -283,7 +284,11 @@ class AuthorizationKeyComponent extends Component {
 			if (! $controller->Session->check('AuthorizationKey.judgement.' . $this->_hashKey)) {
 				// 切り替え後、認証成功時のURLを取り出す
 				$returnUrl = $controller->here;
-				$controller->Session->write('AuthorizationKey.returnUrl.' . $this->_hashKey, $returnUrl . '?' . http_build_query($this->controller->request->query));
+				$controller->Session->write(
+					'AuthorizationKey.returnUrl.' .
+					$this->_hashKey, $returnUrl .
+					'?' .
+					http_build_query($this->controller->request->query));
 				$controller->redirect(NetCommonsUrl::actionUrl($this->AuthorizeKeyAction));
 			} else {
 				// 出ているときはリダイレクトない
@@ -309,18 +314,22 @@ class AuthorizationKeyComponent extends Component {
 		if ($controller->action == $this->targetAction) {
 			if ($controller->request->is('post') || $controller->request->is('put')) {
 				// POPUPのときはここでDBからデータを取り出す
-				$authKey = $this->AuthorizationKey->getAuthorizationKeyByContentId($this->model, $this->contentId, $this->additionalId);
+				$authKey = $this->AuthorizationKey->getAuthorizationKeyByContentId(
+					$this->model, $this->contentId, $this->additionalId);
 				//
 				// 入力された認証キーが正しいことを確認する
 				$data = $this->controller->request->data;
 				if (! isset($data['AuthorizationKey']['authorization_key']) ||
-					$authKey['AuthorizationKey']['authorization_key'] !== $data['AuthorizationKey']['authorization_key']) {
+					$authKey['AuthorizationKey']['authorization_key'] !==
+					$data['AuthorizationKey']['authorization_key']) {
 					$this->_setErrorMessage();
 					$controller->redirect($controller->referer());	// 元に戻す
 				}
 			} else {
 				// POPUP型のガード処理でPOST以外で来ているということはURL強制HACK!
-				throw new ForbiddenException(__d('authorization_keys', 'you can not access without entering authorization key.'));	// 許さない
+				// 許さない
+				throw new ForbiddenException(
+					__d('authorization_keys', 'you can not access without entering authorization key.'));
 			}
 		}
 		// それ以外の場合は何もせず通す
@@ -374,7 +383,8 @@ class AuthorizationKeyComponent extends Component {
 		// dataの中から認証キーデータを探し
 		// そのデータがセッション内容と一致するか確認し
 		// OK/NGを返す
-		$authorizationKey = $this->controller->Session->read('AuthorizationKey.currentAuthorizationKey.' . $hashKey);
+		$authorizationKey =
+			$this->controller->Session->read('AuthorizationKey.currentAuthorizationKey.' . $hashKey);
 		// セッションに情報がない　エラー
 		if (! $authorizationKey) {
 			return false;
@@ -384,11 +394,13 @@ class AuthorizationKeyComponent extends Component {
 			return false;
 		}
 
-		if ($authorizationKey['AuthorizationKey']['authorization_key'] === $data['AuthorizationKey']['authorization_key']) {
+		if ($authorizationKey['AuthorizationKey']['authorization_key'] ===
+			$data['AuthorizationKey']['authorization_key']) {
 			// FIXME OKになったときは認証キーのセッション情報をクリアすべきかな
 			return true;
 		} else {
-			$this->controller->set('authorizationKeyErrorMessage', __d('authorization_keys', 'answer was NOT valid! Please try again.'));
+			$this->controller->set('authorizationKeyErrorMessage',
+				__d('authorization_keys', 'answer was NOT valid! Please try again.'));
 			return false;
 		}
 	}
@@ -399,7 +411,9 @@ class AuthorizationKeyComponent extends Component {
  * @return void
  */
 	protected function _setErrorMessage() {
-		$this->NetCommons->setFlashNotification(__d('authorization_keys', 'answer was NOT valid! Please try again.'));
-		$this->controller->set('authorizationKeyErrorMessage', __d('authorization_keys', 'answer was NOT valid! Please try again.'));
+		$this->NetCommons->setFlashNotification(
+			__d('authorization_keys', 'answer was NOT valid! Please try again.'));
+		$this->controller->set('authorizationKeyErrorMessage',
+			__d('authorization_keys', 'answer was NOT valid! Please try again.'));
 	}
 }

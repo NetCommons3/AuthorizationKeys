@@ -72,11 +72,18 @@ class AuthorizationKeyBehavior extends ModelBehavior {
 		//$contentId = $Model->data[$Model->alias]['id'];
 		//$contentId = $Model->getLastInsertID();
 		$contentId = $Model->id;
-		if (isset($Model->data['AuthorizationKey'])) {
+		if (isset($Model->data['AuthorizationKey']) &&
+			! empty($Model->data['AuthorizationKey']['authorization_key'])) {
 			$AuthorizationKey = $this->_getModel();
-			if (! $AuthorizationKey->saveAuthorizationKey($Model->alias, $contentId, $Model->data['AuthorizationKey']['authorization_key'])) {
+			if (! $AuthorizationKey->saveAuthorizationKey(
+				$Model->alias,
+				$contentId,
+				$Model->data['AuthorizationKey']['authorization_key'])) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
+		} else {
+			$AuthorizationKey = $this->_getModel();
+			$AuthorizationKey->cleanup($Model, $contentId);
 		}
 	}
 
@@ -93,7 +100,8 @@ class AuthorizationKeyBehavior extends ModelBehavior {
 		foreach ($results as $key => $target) {
 			if (isset($target[$Model->alias]['id'])) {
 				$AuthorizationKey = $this->_getModel();
-				$authKey = $AuthorizationKey->getAuthorizationKeyByContentId($Model->alias, $target[$Model->alias]['id']);
+				$authKey = $AuthorizationKey->getAuthorizationKeyByContentId(
+					$Model->alias, $target[$Model->alias]['id']);
 				if ($authKey) {
 					$target['AuthorizationKey'] = $authKey['AuthorizationKey'];
 				}
