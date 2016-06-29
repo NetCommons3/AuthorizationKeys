@@ -64,7 +64,7 @@ class AuthorizationKeysController extends AuthorizationKeysAppController {
  * @return void
  */
 	public function view() {
-		if ($this->request->isPost()) {
+		if ($this->request->is('post')) {
 			if ($this->AuthorizationKey->check()) {
 				$this->redirect($this->AuthorizationKey->getReturnUrl());
 			}

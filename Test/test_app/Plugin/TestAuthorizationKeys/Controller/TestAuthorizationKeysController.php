@@ -105,7 +105,7 @@ class TestAuthorizationKeysController extends AuthorizationKeysController {
  * @return void
  */
 	public function popup() {
-		if ($this->request->isPost()) {
+		if ($this->request->is('post')) {
 			if (! $this->AuthorizationKey->check()) {
 				// この画面をもう一回表示
 				$this->render('TestAuthorizationKeys.TestAuthorizationKeys/ng_popup');
