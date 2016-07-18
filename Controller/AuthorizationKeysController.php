@@ -69,8 +69,8 @@ class AuthorizationKeysController extends AuthorizationKeysAppController {
 				$this->redirect($this->AuthorizationKey->getReturnUrl());
 			}
 		}
-		if (isset($this->params['pass'][1])) {
-			$hashKey = $this->params['pass'][1];
+		if (isset($this->params['key'])) {
+			$hashKey = $this->params['key'];
 		} else {
 			$this->setAction('throwBadRequest');
 			return;
