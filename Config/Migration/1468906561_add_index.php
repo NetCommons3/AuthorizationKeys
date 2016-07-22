@@ -1,6 +1,6 @@
 <?php
 /**
- * Add plugin migration
+ * AddIndex migration
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author AllCreator <info@allcreator.net>
@@ -10,7 +10,7 @@
  */
 
 /**
- * AddedAdditionalId migration
+ * AddIndex migration
  *
  * @author AllCreator <info@allcreator.net>
  * @package NetCommons\AuthorizationKeys\Config\Migration
