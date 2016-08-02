@@ -49,16 +49,16 @@ AuthorizationKeys.directive('authorizationKeysPopupLink',
 NetCommonsApp.requires.push('AuthorizationKeys');
 
 NetCommonsApp.controller('authorizationKeyPopupCtrl',
-    function($scope, $uibModalInstance,
-             url, popupTitle, popupLabel, popupPlaceholder) {
-      $scope.url = url;
-      $scope.popupTitle = popupTitle;
-      $scope.popupLabel = popupLabel;
-      $scope.popupPlaceholder = popupPlaceholder;
-      $scope.submit = function() {
-        $uibModalInstance.dismiss('submit');
-      };
-      $scope.cancel = function() {
-        $uibModalInstance.dismiss('cancel');
-      };
-    });
+    ['$scope', '$uibModalInstance', 'url', 'popupTitle', 'popupLabel', 'popupPlaceholder',
+      function($scope, $uibModalInstance, url, popupTitle, popupLabel, popupPlaceholder) {
+        $scope.url = url;
+        $scope.popupTitle = popupTitle;
+        $scope.popupLabel = popupLabel;
+        $scope.popupPlaceholder = popupPlaceholder;
+        $scope.submit = function() {
+          $uibModalInstance.dismiss('submit');
+        };
+        $scope.cancel = function() {
+          $uibModalInstance.dismiss('cancel');
+        };
+     }]);
