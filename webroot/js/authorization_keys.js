@@ -4,7 +4,7 @@
 var AuthorizationKeys = angular.module('AuthorizationKeys', []);
 
 AuthorizationKeys.directive('authorizationKeysPopupLink',
-    ['$uibModal', function($uibModal) {
+    ['$uibModal', 'NC3_URL', function($uibModal, NC3_URL) {
       return {
         scope: {
           url: '@',
@@ -19,7 +19,7 @@ AuthorizationKeys.directive('authorizationKeysPopupLink',
             scope.modalInstance = $uibModal.open({
               animation: true,
               templateUrl:
-               '/authorization_keys/authorization_keys/popup/?frame_id=' +
+               NC3_URL + '/authorization_keys/authorization_keys/popup/?frame_id=' +
                scope.frameId +
                '&url=' +
                scope.url +
