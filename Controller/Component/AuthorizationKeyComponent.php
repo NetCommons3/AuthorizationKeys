@@ -284,6 +284,16 @@ class AuthorizationKeyComponent extends Component {
 			if (! $controller->Session->check('AuthorizationKey.judgement.' . $this->_hashKey)) {
 				// 切り替え後、認証成功時のURLを取り出す
 				$returnUrl = $controller->here;
+
+				$urlArr = array(
+					'plugin' => $controller->request->params['plugin'],
+					'controller' => $controller->request->params['controller'],
+					'action' => $controller->request->params['action'],
+					'block_id' => $controller->request->params['block_id'],
+					'key' => $controller->request->params['key'],
+				);
+				$returnUrl = Router::url(NetCommonsUrl::actionUrlAsArray($urlArr));
+
 				$controller->Session->write(
 					'AuthorizationKey.returnUrl.' .
 					$this->_hashKey, $returnUrl .
