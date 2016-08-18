@@ -82,8 +82,11 @@ class AuthorizationKeyBehavior extends ModelBehavior {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
 		} else {
-			$AuthorizationKey = $this->_getModel();
-			$AuthorizationKey->cleanup($Model, $contentId);
+			// フィールドを特定しての部分更新じゃないのに認証キーフィールドが設定ないなら、削除
+			if(! isset($options['fieldList']) || empty($options['fieldList'])) {
+				$AuthorizationKey = $this->_getModel();
+				$AuthorizationKey->cleanup($Model, $contentId);
+			}
 		}
 	}
 
