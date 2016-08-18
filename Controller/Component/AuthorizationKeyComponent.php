@@ -285,10 +285,7 @@ class AuthorizationKeyComponent extends Component {
 				// 切り替え後、認証成功時のURLを取り出す
 				$returnUrl = $controller->request->here(false);
 				$controller->Session->write(
-					'AuthorizationKey.returnUrl.' .
-					$this->_hashKey, $returnUrl .
-					'?' .
-					http_build_query($this->controller->request->query));
+					'AuthorizationKey.returnUrl.' . $this->_hashKey, $returnUrl);
 				$controller->redirect(NetCommonsUrl::actionUrl($this->AuthorizeKeyAction));
 			} else {
 				// 出ているときはリダイレクトない
