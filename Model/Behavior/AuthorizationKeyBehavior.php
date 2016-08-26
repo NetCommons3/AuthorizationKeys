@@ -83,7 +83,7 @@ class AuthorizationKeyBehavior extends ModelBehavior {
 			}
 		} else {
 			// フィールドを特定しての部分更新じゃないのに認証キーフィールドが設定ないなら、削除
-			if(! isset($options['fieldList']) || empty($options['fieldList'])) {
+			if (! isset($options['fieldList']) || empty($options['fieldList'])) {
 				$AuthorizationKey = $this->_getModel();
 				$AuthorizationKey->cleanup($Model, $contentId);
 			}
