@@ -13,32 +13,49 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);"
 
-#: /Controller/Component/AuthorizationKeyComponent.php:226
+#: AuthorizationKeys/Controller/Component/AuthorizationKeyComponent.php:329
 msgid "you can not access without entering authorization key."
 msgstr "認証キーの入力が必要です。"
 
-#: /Controller/Component/AuthorizationKeyComponent.php:287;297;298
+#: AuthorizationKeys/Controller/Component/AuthorizationKeyComponent.php:400;412;414
 msgid "answer was NOT valid! Please try again."
 msgstr "認証キーが正しくありません。もう一度やり直してください。"
 
-#: /View/AuthorizationKeys/popup.ctp:16
-msgid "Authorization key confirm dialog"
-msgstr "認証キー確認ダイアログ"
-
-#: /View/AuthorizationKeys/view.ctp:14
+#: AuthorizationKeys/View/AuthorizationKeys/view.ctp:14
 msgid "Please enter the authentication key to proceed"
 msgstr "続行するには認証キーを入力してください。"
 
-#: /View/Helper/AuthorizationKeyHelper.php:37
+#: AuthorizationKeys/View/Elements/authorization_key.ctp:14
+#: AuthorizationKeys/View/Helper/AuthKeyPopupButtonHelper.php:90
+#: Cabinets/View/Elements/CabinetFiles/file_row.ctp:22
 msgid "Authorization key"
 msgstr "認証キー"
 
-#: /View/Helper/AuthorizationKeyHelper.php:38
+#: AuthorizationKeys/View/Elements/authorization_key.ctp:15
+#: AuthorizationKeys/View/Helper/AuthKeyPopupButtonHelper.php:91
+#: Cabinets/View/Elements/CabinetFiles/file_row.ctp:23
 msgid "Please input authorization key"
 msgstr "認証キーを入力してください"
 
+#: AuthorizationKeys/View/Helper/AuthKeyPopupButtonHelper.php:89
+#: Cabinets/View/Elements/CabinetFiles/file_row.ctp:21
+msgid "Authorization key confirm dialog"
+msgstr "認証キー確認ダイアログ"
+
+#: CircularNotices/View/CircularNotices/view.ctp:291;292
+#: Questionnaires/View/QuestionnaireBlocks/index.ctp:96;97
+#: Quizzes/View/QuizBlocks/index.ctp:99;100
+#: Registrations/View/RegistrationBlocks/index.ctp:106;107
+#: Videos/View/Videos/view.ctp:103;104
 msgid "Compression password"
 msgstr "圧縮パスワード"
 
+#: CircularNotices/View/CircularNotices/view.ctp:293
+#: Questionnaires/View/QuestionnaireBlocks/index.ctp:98
+#: Quizzes/View/QuizBlocks/index.ctp:101
+#: Registrations/View/RegistrationBlocks/index.ctp:108
+#: Videos/Controller/VideosController.php:333
+#: Videos/View/Videos/view.ctp:105
 msgid "please input compression password"
 msgstr "ファイルの圧縮パスワードを入力してください"
+
