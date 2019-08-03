@@ -134,17 +134,11 @@ class AuthorizationKeysControllerPopupTest extends NetCommonsControllerTestCase 
 	public function testPopupPost() {
 		$controller = $this->generate('AuthorizationKeys.AuthorizationKeys', array(
 			'components' => array(
-				'Auth' => array('user'),
 				'Session',
 				'Security',
-				'RequestHandler',
 				'AuthorizationKeys.AuthorizationKey'
 			)
 		));
-		$controller->RequestHandler->expects($this->any())
-			->method('accepts')
-			->will(
-				$this->returnValue(true));
 		$this->setExpectedException('BadRequestException');
 
 		$this->_testPostAction('post', array(),

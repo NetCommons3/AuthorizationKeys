@@ -47,7 +47,7 @@ class AuthKeyPopupButtonHelperBeforeRenderTest extends NetCommonsHelperTestCase 
 		$params = array();
 
 		//Helperロード
-		$this->loadHelper('NetCommons.AuthKeyPopupButton', $viewVars, $requestData, $params);
+		$this->loadHelper('AuthorizationKeys.AuthKeyPopupButton', $viewVars, $requestData, $params);
 	}
 
 /**
