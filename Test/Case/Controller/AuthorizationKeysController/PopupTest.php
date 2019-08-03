@@ -132,7 +132,7 @@ class AuthorizationKeysControllerPopupTest extends NetCommonsControllerTestCase 
  * @return void
  */
 	public function testPopupPost() {
-		$controller = $this->generate('AuthorizationKeys.AuthorizationKeys', array(
+		$this->generate('AuthorizationKeys.AuthorizationKeys', array(
 			'components' => array(
 				'Session',
 				'Security',
