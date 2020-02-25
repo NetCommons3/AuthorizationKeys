@@ -320,7 +320,11 @@ class AuthorizationKeyComponent extends Component {
 					$authKey['AuthorizationKey']['authorization_key'] !==
 					$data['AuthorizationKey']['authorization_key']) {
 					$this->_setErrorMessage();
-					$controller->redirect($controller->referer());	// 元に戻す
+					$url = $controller->referer();
+					if (strpos($url, '?no-cache=1') === false) {
+						$url .= '?no-cache=1';
+					}
+					$controller->redirect($url);
 				}
 			} else {
 				// POPUP型のガード処理でPOST以外で来ているということはURL強制HACK!
