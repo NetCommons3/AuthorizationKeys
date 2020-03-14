@@ -136,7 +136,11 @@ class AuthorizationKeyBehavior extends ModelBehavior {
  * @return void
  */
 	public function afterDelete(Model $Model) {
-		$contentId = $this->_deleteTargetData[$Model->alias]['id'];
+		if (isset($this->_deleteTargetData[$Model->alias]['id'])) {
+			$contentId = $this->_deleteTargetData[$Model->alias]['id'];
+		} else {
+			$contentId = null;
+		}
 		$AuthorizationKey = $this->_getModel();
 		$AuthorizationKey->cleanup($Model, $contentId);
 	}
