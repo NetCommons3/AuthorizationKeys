@@ -98,7 +98,7 @@ class AuthKeyPopupButtonHelper extends AppHelper {
 		}
 		$html = '<a  authorization-keys-popup-link frame-id="' . Current::read('Frame.id') . '" ' .
 			'class="' . $options['class'] . '" ' .
-			'url="' . $options['url'] . '" ' .
+			'url="' . rawurlencode($options['url']) . '" ' .
 			'popup-title="' . $options['popup-title'] . '" ' .
 			'popup-label="' . $options['popup-label'] . '" ' .
 			'popup-placeholder="' . $options['popup-placeholder'] . '">' .
