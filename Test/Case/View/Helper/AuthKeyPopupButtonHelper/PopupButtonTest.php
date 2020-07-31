@@ -59,7 +59,7 @@ class AuthKeyPopupButtonHelperPopupButtonTest extends NetCommonsHelperTestCase {
 		$result = $this->AuthKeyPopupButton->popupButton(array(
 			'url' => '/test_plugin/test_controller/test_action'
 		));
-		$this->assertTextContains('/test_plugin/test_controller/test_action', $result);
+		$this->assertTextContains(rawurlencode('/test_plugin/test_controller/test_action'), $result);
 		$this->assertTextContains('glyphicon-download', $result);
 		$this->assertTextContains('btn btn-success', $result);
 
@@ -71,7 +71,7 @@ class AuthKeyPopupButtonHelperPopupButtonTest extends NetCommonsHelperTestCase {
 			'popup-label' => 'test_popup_label',
 			'popup-placeholder' => 'test_popup_placeholder',
 		));
-		$this->assertTextContains('/test_plugin/test_controller/test_action2', $result);
+		$this->assertTextContains(rawurlencode('/test_plugin/test_controller/test_action2'), $result);
 		$this->assertTextContains('test_icon', $result);
 		$this->assertTextContains('btn btn-danger', $result);
 
@@ -79,7 +79,7 @@ class AuthKeyPopupButtonHelperPopupButtonTest extends NetCommonsHelperTestCase {
 			'url' => '/test_plugin/test_controller/test_action3',
 			'icon' => '',
 		));
-		$this->assertTextContains('/test_plugin/test_controller/test_action3', $result);
+		$this->assertTextContains(rawurlencode('/test_plugin/test_controller/test_action3'), $result);
 		$this->assertNotContains('icon', $result);
 	}
 }
