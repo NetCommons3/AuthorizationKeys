@@ -20,6 +20,22 @@ App::uses('AppController', 'Controller');
 class AuthorizationKeysController extends AuthorizationKeysAppController {
 
 /**
+ * popup型 チェック用URL
+ *
+ * @var array
+ * @see https://github.com/researchmap/RmNetCommons3/issues/2347
+ */
+	const POPUP_VALIDATE_URLS = [
+		'/cabinets/cabinet_files/download/',
+		'/multidatabases/multidatabase_contents/download/',
+		'/videos/videos/download/',
+        '/questionnaires/questionnaire_blocks/download/',
+		'/quizzes/quiz_blocks/download/',
+		'/registrations/registration_blocks/download/',
+		'/circular_notices/circular_notices/download/',
+	];
+
+/**
  * use components
  *
  * @var array
@@ -90,6 +106,35 @@ class AuthorizationKeysController extends AuthorizationKeysAppController {
 			return;
 		}
 		$url = $this->request->query['url'];
+		$url = $this->__cleansingUrl($url);
 		$this->set('url', $url);
+	}
+
+/**
+ * popup型 URLチェック
+ *
+ * @param string $url 指定URL
+ * @return string クレンジング後のURL エラーの場合、TopページのURLを返す
+ * @see https://github.com/researchmap/RmNetCommons3/issues/2347
+ */
+	private function __cleansingUrl($url) : string {
+		$valid = false;
+		foreach (self::POPUP_VALIDATE_URLS as $validateUrl) {
+			if (preg_match('/^' . preg_quote($validateUrl, '/') . '/i', $url)) {
+				$parseUrls = explode('?', $url);
+				if (isset($parseUrls[1])) {
+					// queryサニタイズ
+					$query = str_replace('&amp;', '&', h($parseUrls[1]));
+					$url = $parseUrls[0] . '?' . $query;
+					$valid = true;
+					break;
+				}
+			}
+		}
+		if (!$valid) {
+			// TopページのURLを返す
+			return Configure::read('App.fullBaseUrl');
+		}
+		return $url;
 	}
 }

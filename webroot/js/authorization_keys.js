@@ -22,7 +22,7 @@ AuthorizationKeys.directive('authorizationKeysPopupLink',
                NC3_URL + '/authorization_keys/authorization_keys/popup/?frame_id=' +
                scope.frameId +
                '&url=' +
-               scope.url +
+               encodeURIComponent(scope.url) +
                '&unique=' + Math.random().toString(36).slice(2),
               controller: 'authorizationKeyPopupCtrl',
               resolve: {
