@@ -21,14 +21,18 @@ class AuthorizationKeysController extends AuthorizationKeysAppController {
 
 /**
  * popup型 チェック用URL
- * @see https://github.com/researchmap/RmNetCommons3/issues/2347
  *
  * @var array
+ * @see https://github.com/researchmap/RmNetCommons3/issues/2347
  */
 	const POPUP_VALIDATE_URLS = [
 		'/cabinets/cabinet_files/download/',
 		'/multidatabases/multidatabase_contents/download/',
 		'/videos/videos/download/',
+        '/questionnaires/questionnaire_blocks/download/',
+		'/quizzes/quiz_blocks/download/',
+		'/registrations/registration_blocks/download/',
+		'/circular_notices/circular_notices/download/',
 	];
 
 /**
@@ -108,12 +112,12 @@ class AuthorizationKeysController extends AuthorizationKeysAppController {
 
 /**
  * popup型 URLチェック
- * @see https://github.com/researchmap/RmNetCommons3/issues/2347
  *
  * @param string $url 指定URL
  * @return string クレンジング後のURL エラーの場合、TopページのURLを返す
+ * @see https://github.com/researchmap/RmNetCommons3/issues/2347
  */
-	private function __cleansingUrl($url): string {
+	private function __cleansingUrl($url) : string {
 		$valid = false;
 		foreach (self::POPUP_VALIDATE_URLS as $validateUrl) {
 			if (preg_match('/^' . preg_quote($validateUrl, '/') . '/i', $url)) {
