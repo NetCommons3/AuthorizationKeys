@@ -29,7 +29,7 @@ class AuthorizationKeysController extends AuthorizationKeysAppController {
 		'/cabinets/cabinet_files/download/',
 		'/multidatabases/multidatabase_contents/download/',
 		'/videos/videos/download/',
-        '/questionnaires/questionnaire_blocks/download/',
+		'/questionnaires/questionnaire_blocks/download/',
 		'/quizzes/quiz_blocks/download/',
 		'/registrations/registration_blocks/download/',
 		'/circular_notices/circular_notices/download/',
